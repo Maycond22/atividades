@@ -1,16 +1,33 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour {
 
     public GameObject menuCamera;
     public GameObject menuPanel;
 
+    private int pontos;
+    public Text txtPontos;
+
     public Estado estado { get; private set; }
 
     public GameObject obstaculo;
     public float espera;
     public float tempoDestruicao;
+
+    public void incrementarPontos(int x)
+    {
+        atualizarPontos(pontos + x);
+    }
+
+
+    private void atualizarPontos(int x)
+    {
+        pontos = x;
+        txtPontos.text = "" + x;
+    }
+
 
     public static GameController instancia = null;
 
@@ -37,10 +54,12 @@ public class GameController : MonoBehaviour {
         }
 	}
 
-    public void PlayerComecou() {
+    public void PlayerComecou()
+    {
         estado = Estado.Jogando;
-        menuCamera.SetActive(false);
-        menuPanel.SetActive(false);
+        menu.SetActive(false);
+        painelMenu.SetActive(false);
+        atualizarPontos(0);
         StartCoroutine(GerarObstaculos());
     }
 
